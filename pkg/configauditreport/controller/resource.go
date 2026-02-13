@@ -340,7 +340,7 @@ func (r *ResourceController) writeAlternateReports(resource client.Object, misCo
 				reportBuilder.ReportTTL(r.Config.ScannerReportTTL)
 			}
 
-			var configReport interface{}
+			var configReport any
 			var err error
 			if kube.IsClusterScopedKind(workloadKind) {
 				configReport, err = reportBuilder.GetClusterReport()
@@ -376,7 +376,7 @@ func (r *ResourceController) writeAlternateReports(resource client.Object, misCo
 				infraReportBuilder.ReportTTL(r.Config.ScannerReportTTL)
 			}
 
-			var infraReport interface{}
+			var infraReport any
 			var err error
 			if kube.IsClusterScopedKind(workloadKind) {
 				infraReport, err = infraReportBuilder.GetClusterReport()
@@ -412,7 +412,7 @@ func (r *ResourceController) writeAlternateReports(resource client.Object, misCo
 				rbacReportBuilder.ReportTTL(r.Config.ScannerReportTTL)
 			}
 
-			var rbacReport interface{}
+			var rbacReport any
 			var err error
 			if kube.IsClusterScopedKind(workloadKind) {
 				rbacReport, err = rbacReportBuilder.GetClusterReport()

@@ -156,6 +156,7 @@ func (p *plugin) ParseReportData(ctx trivyoperator.PluginContext, imageRef strin
 	if err != nil {
 		return vulnReport, secretReport, nil, err
 	}
+	p.applyImageIgnore(&reports, ctx.GetTrivyOperatorConfig().ImageIgnoreLabel(), imageRef)
 
 	imageDigest := p.getImageDigest(reports)
 

@@ -57,6 +57,7 @@ const (
 	KeyVulnerabilityScannerEnabled       = "vulnerabilityScannerEnabled"
 	KeyExposedSecretsScannerEnabled      = "exposedSecretsScannerEnabled"
 	KeyGenerateSbom                      = "generateSbomEnabled"
+	KeyImageIgnoreLabel                  = "imageIgnoreLabel"
 	keyVulnerabilityReportsScanner       = "vulnerabilityReports.scanner"
 	KeyVulnerabilityScansInSameNamespace = "vulnerabilityReports.scanJobsInSameNamespace"
 	keyConfigAuditReportsScanner         = "configAuditReports.scanner"
@@ -148,6 +149,11 @@ func (c ConfigData) ExposedSecretsScannerEnabled() bool {
 // GenerateSbomEnabled returns if the sbom generation is enabled
 func (c ConfigData) GenerateSbomEnabled() bool {
 	return c.getBoolKey(KeyGenerateSbom)
+}
+
+// ImageIgnoreLabel returns the name of the image label holding a Trivy ignore file, empty when off
+func (c ConfigData) ImageIgnoreLabel() string {
+	return c[KeyImageIgnoreLabel]
 }
 
 func (c ConfigData) getBoolKey(key string) bool {

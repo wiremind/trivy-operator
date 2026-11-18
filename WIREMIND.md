@@ -22,9 +22,10 @@ On top of upstream `v0.36.1`:
 - report files are named `<namespace>_<kind>_<name>_<container>.json` and written through a temporary file and a rename;
 - with alternate storage, a workload is not rescanned while each container has a report file with the current spec hash younger than `scannerReportTTL`, and it is requeued when the oldest one expires;
 - with alternate storage, report files are deleted at start and every hour when their workload no longer exists, when they are older than the TTL, or when their name does not match their content;
+- with `OPERATOR_IMAGE_IGNORE_LABEL` set to a label name, the vulnerabilities and secrets listed in the `.trivyignore.yaml` that CI stores in that image label (gzip, then base64) are dropped from the image's report, with Trivy's own matching; an unreadable label or a file over 1 MiB is logged and the full report is kept;
 - the upstream workflows are replaced by `.github/workflows/wiremind.yaml`.
 
-Without alternate storage the operator behaves as upstream.
+Without alternate storage and without `OPERATOR_IMAGE_IGNORE_LABEL` the operator behaves as upstream.
 
 ## Releases
 
@@ -36,4 +37,4 @@ The volume is ReadWriteOnce, so run a single replica (`operator.replicas: 1`, th
 
 For a new upstream release, rebase `wiremind` onto its tag, drop what upstream now ships, and tag `v<new version>-wiremind.1`.
 
-Drop the fork once upstream ships equivalent fixes for all the points above.
+Drop the fork once upstream ships equivalent fixes for all the points above. Upstream has no per-image ignore file (issue `#1857` is still open), so the image ignore label alone keeps the fork alive.
